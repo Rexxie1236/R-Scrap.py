@@ -19,7 +19,7 @@ def display_logo():
     print("Author: REXXIE")
     print("Program Name: R-Scrap.py")
     print("Programmers ID: 08101217448"
-"-" * 50 + RESET)
+          "-" * 50 + RESET)
 # Display menu
 def display_menu():
     print(GREEN + """
