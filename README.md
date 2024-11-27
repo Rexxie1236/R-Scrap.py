@@ -13,4 +13,4 @@ To use this script, follow these steps:
    rm -rf Scrape
    git clone --depth=1 https://github.com/REXXIE/R-scrap.py
    cd R-scrap.py
-   python Scraper.py
+   python R-Scrap.py
