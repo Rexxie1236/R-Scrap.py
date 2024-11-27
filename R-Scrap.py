@@ -4,7 +4,6 @@ import os
 PURPLE = '\033[95m'
 GREEN = '\033[92m'
 RESET = '\033[0m'
-
 # Display logo and welcome message
 def display_logo():
     print(PURPLE + """
@@ -15,13 +14,12 @@ def display_logo():
  /_/ |_/_____//_/|_/_/|_/___/_____/____\____/\____/_/ |_/_____/
                                 /_____/
     """ + RESET)
-    print("-" * 50)
+    print(GREEN + "-" * 50)
     print(GREEN + "WELCOME TO REXXIE_WORLD")
     print("Author: REXXIE")
     print("Program Name: R-Scrap.py")
     print("Programmers ID: 08101217448")
     print("-" * 50 + RESET)
-
 # Display menu
 def display_menu():
     print(GREEN + """
@@ -29,9 +27,7 @@ def display_menu():
     2. Extract with unlimited IDs
     3. Exit Program
     0. Remove Cookie
-    """ + RESET)
-    print("-" * 50)
-
+    """ + "-" * 50 + RESET)
 # Main script logic
 def main():
     os.system('clear')
