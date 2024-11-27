@@ -18,16 +18,16 @@ def display_logo():
     print(GREEN + "WELCOME TO REXXIE_WORLD")
     print("Author: REXXIE")
     print("Program Name: R-Scrap.py")
-    print("Programmers ID: 08101217448"
-          "-" * 50 + RESET)
+    print("Programmers ID: 08101217448")
+    print("-" * 50 + RESET)
 # Display menu
 def display_menu():
     print(GREEN + """
     1. Extract with single ID
     2. Extract with unlimited IDs
     3. Exit Program
-    0. Remove Cookie)
-    print(""" + "-" * 50 + RESET)
+    0. Remove Cookie
+    """ + "-" * 50 + RESET)
 # Main script logic
 def main():
     os.system('clear')
