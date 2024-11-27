@@ -15,7 +15,7 @@ def display_logo():
  /_/ |_/_____//_/|_/_/|_/___/_____/____\____/\____/_/ |_/_____/
                                 /_____/
 
-    """ + RESET)
+    ("-" * 50+ RESET)
     print(GREEN + "WELCOME TO REXXIE_WORLD")
     print("Author: REXXIE")
     print("Program Name: R-Scrap.py")
@@ -29,7 +29,7 @@ def display_menu():
     2. Extract with unlimited IDs
     3. Exit Program
     0. Remove Cookie
-    """ + RESET)
+    ("-" * 50 + RESET)
 
 # Main script logic
 def main():
