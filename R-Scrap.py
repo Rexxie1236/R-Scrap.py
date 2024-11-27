@@ -1,47 +1,58 @@
 import os
 
-# Display logo in purple
-logo = """
-\033[35m ____  _______  ___  __ __________    __________  ____  ______
-   / __ \\/ ____/ |/ / |/ //  _/ ____/   / ____/ __ \\/ __ \\/ ____/
-  / /_/ / __/  |   /|   / / // __/     / /   / / / / /_/ / __/
- / _, _/ /___ /   |/   |_/ // /___    / /___/ /_/ / _, _/ /___
-/_/ |_/_____//_/|_/_/|_/___/_____/____\____/\____/_/ |_/_____/
-                                /_____/
 
+---
+
+### **Updating Your Code to Match This Flow**
+Your current code likely repeats the welcome message whenever the menu reappears. To fix this, you can structure your program to display the welcome message only once when the program starts. Here's a sample structure in Python:
+
+```python
+logo = r"""
+____  _______  ___  __ __________    __________  ____  ______
+/ __ \/ ____/ |/ / |/ //  _/ ____/   / ____/ __ \/ __ \/ ____/
+/ /_/ / __/  |   /|   / / // __/     / /   / / / / /_/ / __/
+/ _, _/ /___ /   |/   |_/ // /___    / /___/ /_/ / _, _/ /___
+/_/ |_/_____//_/|_/_/|_/___/_____/____\____/\____/_/ |_/_____/
+                             /_____/"""
+
+welcome_message = """
+----------------------------------------------
+WELCOME TO REXXIE_WORLD
+Author - REXXIE
+Program Name : R-Scrap.py
+Programmers ID : 08101217448
+----------------------------------------------
+"""
+menu = """
+----------------------------------------------
+1. Extract with single Id
+2. Extract with unlimited Ids
+3. Exit Program
+0. Remove Cookie
+----------------------------------------------
+Choose option:
 """
 
-# Welcome message
+# Display the logo and welcome message only once
 print(logo)
-print("\033[32m----------------------------------------------")
-print("\033[32mWELCOME TO REXXIE_WORLD")
-print("\033[32mAuthor - REXXIE")
-print("\033[32mProgram Name : R-Scrap.py")
-print("\033[32mProgrammers ID : 08101217448")
-print("\033[32m----------------------------------------------")
+print(welcome_message)
 
-# Main menu options
+# Main program loop
 while True:
-    print("\033[32m1. Extract with single Id")
-    print("2. Extract with unlimited Ids")
-    print("3. Exit Program")
-    print("0. Remove Cookie")
-    print("\033[32m----------------------------------------------")
-    
-    # Get user input for option
-    choice = input("\033[32mChoose option: ")
-
-    if choice == '1':
-        print("\033[34mFetching friends list for single ID...")
-        # Add the functionality of fetching friends for a single ID here
-    elif choice == '2':
-        print("\033[34mFetching friends list for multiple IDs...")
-        # Add the functionality of fetching friends for multiple IDs here
-    elif choice == '3':
-        print("\033[32mExiting program...")
-        break
-    elif choice == '0':
-        print("\033[32mRemoving cookies...")
-        # Add the cookie removal functionality here
-    else:
-        print("\033[31mInvalid option. Please choose again.")
+ print(menu)
+ choice = input("> ").strip()
+ 
+ if choice == "1":
+     print("You selected option 1: Extract with single Id")
+     # Add functionality for option 1 here
+ elif choice == "2":
+     print("You selected option 2: Extract with unlimited Ids")
+     # Add functionality for option 2 here
+ elif choice == "3":
+     print("Exiting the program. Goodbye!")
+     break
+ elif choice == "0":
+     print("Removing cookies...")
+     # Add functionality to remove cookies here
+ else:
+     print("Invalid option. Please try again.")
