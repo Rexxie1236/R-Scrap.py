@@ -14,7 +14,7 @@ def display_logo():
   / _, _/ /___ /   |/   |_/ // /___    / /___/ /_/ / _, _/ /___
  /_/ |_/_____//_/|_/_/|_/___/_____/____\____/\____/_/ |_/_____/
                                 /_____/
-
+     """ + RESET)
     ("-" * 50+ RESET)
     print(GREEN + "WELCOME TO REXXIE_WORLD")
     print("Author: REXXIE")
