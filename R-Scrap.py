@@ -14,7 +14,7 @@ def display_logo():
   / _, _/ /___ /   |/   |_/ // /___    / /___/ /_/ / _, _/ /___
  /_/ |_/_____//_/|_/_/|_/___/_____/____\____/\____/_/ |_/_____/
                                 /_____/
-     """ + RESET)
+    """ + RESET)
     print("-" * 50)
     print(GREEN + "WELCOME TO REXXIE_WORLD")
     print("Author: REXXIE")
@@ -29,7 +29,8 @@ def display_menu():
     2. Extract with unlimited IDs
     3. Exit Program
     0. Remove Cookie
-    print("-" * 50 + RESET)
+    """ + RESET)
+    print("-" * 50)
 
 # Main script logic
 def main():
