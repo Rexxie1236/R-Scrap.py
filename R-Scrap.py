@@ -7,10 +7,8 @@ PURPLE = '\033[95m'
 GREEN = '\033[92m'
 RESET = '\033[0m'
 
-# Facebook Cookie (User can either input cookie or username/password)
+# Facebook Cookie (User can input their cookie)
 cookie = ""
-username = ""
-password = ""
 
 # Display logo and welcome message
 def display_logo():
@@ -39,57 +37,44 @@ def display_menu():
     """ + "-" * 50 + RESET)
 
 # Get Facebook login credentials
-def get_credentials():
-    global cookie, username, password
+def get_cookie():
+    global cookie
+    cookie = input("Enter your Facebook cookie: ").strip()
+    if not cookie:
+        print("No cookie provided. You cannot proceed without a cookie.")
+        exit()
 
-    # Prompt for cookie or login details
-    choice = input("Login with (1) Cookie or (2) Username/Password: ").strip()
-
-    if choice == '1':
-        cookie = input("Enter your Facebook cookie: ")
-        print("Cookie set successfully!")
-    elif choice == '2':
-        username = input("Enter your Facebook username: ")
-        password = input("Enter your Facebook password: ")
-        print("Login details set successfully!")
-    else:
-        print("Invalid choice. Please enter a valid option.")
-        get_credentials()
-
-# Function to fetch friends list from Facebook
-def fetch_friends_list(url, cookies):
+# Fetch friends list for a given Facebook ID
+def fetch_friends_list(user_id):
+    url = f"https://m.facebook.com/{user_id}/friends"
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+        "Cookie": cookie,
     }
+    response = requests.get(url, headers=headers)
     
-    # Check if we have cookie or login details
-    cookies = {
-        "datr": cookie.split(";")[0].split("=")[1],
-        "sb": cookie.split(";")[1].split("=")[1],  # Add more cookies as necessary
-    }
-
-    response = requests.get(url, headers=headers, cookies=cookies)
-
     if response.status_code == 200:
+        print(f"Successfully fetched data for user ID: {user_id}")
         soup = BeautifulSoup(response.text, 'html.parser')
         friends = []
-        for friend in soup.find_all('a', {'class': 'friend'}):  # Adjust class name as needed
-            friend_id = friend.get('href').split('=')[-1]
-            friends.append(friend_id)
+        for friend in soup.find_all('a', href=True):
+            if "friends/hovercard" in friend['href']:
+                friends.append(friend.text)
         return friends
     else:
-        print(f"Failed to retrieve page. Status code: {response.status_code}")
+        print(f"Failed to retrieve page for user ID {user_id}. Status code: {response.status_code}")
         return []
 
-# Function to prompt for directory and save results
-def save_scraped_data(friends):
+# Save friends list to the specified directory
+def save_to_file(friends):
     directory = input("Enter the directory to save the scraped data (e.g., /sdcard/test.txt): ").strip()
-    filename = os.path.join(directory, "test.txt")
-
-    with open(filename, 'w') as file:
-        for friend in friends:
-            file.write(f"{friend}\n")
-    print(f"Scraped data saved to {filename}")
+    try:
+        with open(directory, 'w') as file:
+            for friend in friends:
+                file.write(f"{friend}\n")
+        print(f"Scraped data saved to {directory}")
+    except Exception as e:
+        print(f"Failed to save data. Error: {e}")
 
 # Main script logic
 def main():
@@ -97,34 +82,39 @@ def main():
     display_logo()
     display_menu()
 
-    # Get login credentials (either cookie or username/password)
-    get_credentials()
+    # Ensure login via cookie
+    if not cookie:
+        get_cookie()
 
     choice = input("Choose option: ").strip()
 
     if choice == '1':
-        print("Fetching friends for a single ID...")
-        friends = fetch_friends_list("https://m.facebook.com/100085597518314/friends", cookies)
+        user_id = input("Enter the Facebook ID to scrape: ").strip()
+        print(f"Fetching friends for user ID: {user_id}...")
+        friends = fetch_friends_list(user_id)
         if friends:
             print(f"Found {len(friends)} friends.")
-            save_scraped_data(friends)
+            save_to_file(friends)
         else:
             print("No friends found or failed to fetch data.")
     elif choice == '2':
-        print("Fetching friends for unlimited IDs...")
-        # Multiple user IDs as example
-        user_ids = ["100085597518314", "100084884637391"]
+        print("Fetching friends for multiple IDs...")
+        user_ids = input("Enter Facebook IDs separated by commas: ").strip().split(',')
+        all_friends = []
         for user_id in user_ids:
             print(f"Fetching friends for {user_id}...")
-            friends = fetch_friends_list(f"https://m.facebook.com/{user_id}/friends", cookies)
-            if friends:
-                print(f"Found {len(friends)} friends for {user_id}.")
-                save_scraped_data(friends)
-            else:
-                print(f"Failed to retrieve friends for {user_id}.")
+            friends = fetch_friends_list(user_id)
+            all_friends.extend(friends)
+        if all_friends:
+            print(f"Found {len(all_friends)} total friends.")
+            save_to_file(all_friends)
+        else:
+            print("No friends found or failed to fetch data.")
     elif choice == '3':
         print("Exiting program...")
     elif choice == '0':
+        global cookie
+        cookie = ""
         print("Cookie removed!")
     else:
         print("Invalid option. Please try again.")
